@@ -9,6 +9,7 @@
 </head>
 <body>
     <div class="container">
+      <a href="create.html">create</a>
         <table>
             <thead>
               <tr>
@@ -33,6 +34,7 @@
         getlist()
         async function getlist(){
             let URL ='https://crud.teamrabbil.com/api/v1/ReadProduct'
+            let url1 =`https://jsonplaceholder.typicode.com/posts`
             let res = await axios.get(URL)
             console.log(res)
             if(res.status === 200){
@@ -61,7 +63,7 @@
         }
 
         async function deleteItem (id)  {
-
+      
         let res = await axios.get(`https://crud.teamrabbil.com/api/v1/DeleteProduct/${id}`)
         if(res.status === 200)
         {
