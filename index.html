@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+    <link rel="stylesheet" href="/node_modules/milligram/dist/milligram.min.css">
+</head>
+<body>
+    <div class="container">
+        <table>
+            <thead>
+              <tr>
+               
+                <th>ProductName</th>
+                <th>ProductCode</th>
+                <th>Img</th>
+                <th>UnitPrice</th>
+                <th>Qty</th>
+                <th>TotalPrice</th>
+      
+              </tr>
+            </thead>
+            <tbody id="dataList">
+              
+            </tbody>
+          </table>
+    </div>
+
+   <script>
+  
+        getlist()
+        async function getlist(){
+            let URL ='https://crud.teamrabbil.com/api/v1/ReadProduct'
+            let res = await axios.get(URL)
+            console.log(res)
+            if(res.status === 200){
+                let html = "";
+                let data = res.data['data']
+                console.log(data)
+                data.forEach(item => {
+                    html += (`<tr>
+                       
+                        <td>${item.ProductName}</td>
+                        <td>${item.ProductCode}</td>
+                        <td>${item.Img}</td>
+                        <td>${item.UnitPrice}</td>
+                        <td>${item.Qty}</td>
+                        <td>${item.TotalPrice}</td>
+                      
+                       <td><button onclick="deleteItem('${item['_id']}')">Delete</button></td>
+                       <td><button onclick="updateItem1('${item['_id']}')">Update</button></td>
+                        </tr>`)                    
+                });
+                
+               document.getElementById('dataList').innerHTML = html;
+            }else{
+                console.log('error')
+            }
+        }
+
+        async function deleteItem (id)  {
+
+        let res = await axios.get(`https://crud.teamrabbil.com/api/v1/DeleteProduct/${id}`)
+        if(res.status === 200)
+        {
+          document.getElementById('dataList').innerHTML = "";
+          await getlist()
+            }else{
+              console.log('erre')
+        }
+      }
+
+
+
+
+  async function updateItem1(id){
+                window.location.href = `update.html?id=${id}`
+  }
+
+
+ 
+   </script>
+</body>
+</html>
